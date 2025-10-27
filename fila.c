@@ -52,28 +52,31 @@ boolean desenfileire(Fila* f, ElementoDeFila* e)
 
 boolean fila_vazia (Fila f)
 {
-    
-    if (f.qtd_atual==0)
-        return true;
-    else
-        return false;
-    
-    return f.qtd_atual==0;
+    // O código original estava repetido
+    return f.qtd_atual == 0;
 }
 
-// Libera memória da fila
+// Libera memória da fila (VERSÃO CORRIGIDA)
 boolean free_fila (Fila* f)
 {
     if (f->vetor==NULL) return false;
 
-    for (int i=0; i<f->qtd_atual; i++)
+    // Libera cada elemento (string) restante na fila
+    // A forma correta de esvaziar um ADT é usando suas próprias operações
+    while (!fila_vazia(*f))
     {
-        f->qtd_atual--;
-        free(f->vetor[f->qtd_atual]);
+        ElementoDeFila e;
+        desenfileire(f, &e); // Remove o elemento
+        free(e);             // Libera a string
     }
 
+    // Libera o vetor da fila
     free(f->vetor);
     f->vetor=NULL;
+    f->capacidade = 0;
+    f->qtd_atual = 0;
+    f->inicio = 0;
+    f->final = 0;
 
     return true;
 }
