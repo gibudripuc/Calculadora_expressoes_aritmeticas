@@ -2,7 +2,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#define MAX_EXPRESSAO 100
+#define MAX_EXPRESSAO 300
 
 #include "fila.h"
 
