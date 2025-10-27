@@ -6,8 +6,6 @@
 #include "utils.h"
 #include "polonesa.h" // Inclui as funções de conversão e cálculo
 
-#define MAX_EXPRESSAO 100
-
 // Protótipos das funções de utils.c
 int ler_expressao(char *expressao);
 int remover_espacos(char *dest, const char *orig);
