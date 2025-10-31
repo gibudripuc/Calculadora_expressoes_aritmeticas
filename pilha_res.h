@@ -11,12 +11,12 @@ typedef struct {
     int topo; 
 } PilhaRes;
 
-boolean nova_pilha_res(PilhaRes *p, unsigned int capacidade);
-boolean empilhe_res(PilhaRes *p, ElementoDePilhaRes e);
-boolean desempilhe_res(PilhaRes *p, ElementoDePilhaRes *e);
-boolean pilha_res_vazia(PilhaRes p);
-// Função para verificar a qtd de elementos no final [cite: 385]
+bool nova_pilha_res(PilhaRes *p, unsigned int capacidade);
+bool empilhe_res(PilhaRes *p, ElementoDePilhaRes e);
+bool desempilhe_res(PilhaRes *p, ElementoDePilhaRes *e);
+bool pilha_res_vazia(PilhaRes p);
+// Função para verificar a qtd de elementos no final
 unsigned int pilha_res_qtd(PilhaRes p); 
-boolean free_pilha_res(PilhaRes *p);
+bool free_pilha_res(PilhaRes *p);
 
 #endif

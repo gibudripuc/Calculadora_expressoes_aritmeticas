@@ -6,12 +6,6 @@
 #include "utils.h"
 #include "polonesa.h" // Inclui as funções de conversão e cálculo
 
-// Protótipos das funções de utils.c
-int ler_expressao(char *expressao);
-int remover_espacos(char *dest, const char *orig);
-int quebrar_em_tokens(const char *expr, Fila *filaEntrada);
-// A função mostrar_fila() de utils.c é destrutiva, não a usaremos aqui.
-
 int main() {
     char expressao[MAX_EXPRESSAO];
     char semEspacos[MAX_EXPRESSAO];
@@ -21,10 +15,10 @@ int main() {
 
     while (1) { // Loop para permitir múltiplos cálculos
         
-        if (ler_expressao(expressao)) continue; // [cite: 48]
+        if (ler_expressao(expressao)) continue;
         if (strcmp(expressao, "fim") == 0) break; // Condição de saída
 
-        if (remover_espacos(semEspacos, expressao)) { // [cite: 49]
+        if (remover_espacos(semEspacos, expressao)) {
             continue; // Erro já foi impresso
         }
 
@@ -33,7 +27,7 @@ int main() {
             continue;
         }
 
-        // --- Etapa 1: Leitura e Quebra [cite: 46] ---
+        //Etapa 1
         Fila filaEntrada;
         if (!nova_fila(&filaEntrada, MAX_EXPRESSAO)) {
             printf("Erro ao criar fila de entrada!\n");
@@ -45,7 +39,7 @@ int main() {
             continue; // Erro já foi impresso
         }
 
-        // --- Etapa 2: Conversão Infixa -> Pós-fixa [cite: 58] ---
+        //Etapa 2: Conversão Infixa -> Pós-fixa
         Fila filaSaida; // Fila para a notação pós-fixa 
         if (!nova_fila(&filaSaida, MAX_EXPRESSAO)) {
             printf("Erro ao criar fila de saida!\n");
@@ -53,32 +47,32 @@ int main() {
             return 1;
         }
 
-        // A filaEntrada é consumida (esvaziada) pela conversão
+        // A filaEntrada é esvaziada pela conversão
         if (!converter_infixa_para_posfixa(&filaEntrada, &filaSaida)) {
-            // Erro de conversão (ex: parênteses desbalanceados) [cite: 28]
-            free_fila(&filaEntrada); // Libera vetor
+            // Erro de conversão (ex: parênteses desbalanceados)
+            // filaEntrada já é liberada internamente pela função converter_infixa_para_posfixa
             free_fila(&filaSaida);   // Libera o que foi gerado até o erro
             continue;
         }
 
-        // --- Etapa 3: Cálculo da Expressão Pós-fixa  ---
+        //Etapa 3: Cálculo da Expressão Pós-fixa
         double resultado;
         
-        // A filaSaida é consumida (esvaziada) pelo cálculo
+        // A filaSaida é esvaziada pelo cálculo
         if (!calcular_posfixa(&filaSaida, &resultado)) {
-            // Erro de cálculo (div/0, malformada) [cite: 386, 387]
-            free_fila(&filaSaida); // Libera o que sobrou em caso de erro
+            // Erro de cálculo
+            // filaSaida já é liberada internamente pela função calcular_posfixa
             continue;
         }
 
-        // --- Sucesso ---
-        printf("Entrada: %s\n", expressao); // [cite: 11]
-        // %g formata o double de forma inteligente (ex: 23 em vez de 23.000000)
-        printf("Saida: %g\n\n", resultado); // [cite: 13]
+        //Sucesso
+        printf("Entrada: %s\n", expressao);
+        // %g formata o double de forma inteligente (ex: 23 em vez de 23.000)
+        printf("Saida: %g\n\n", resultado);
 
-        // Libera os vetores das filas (o conteúdo delas já foi liberado)
-        free_fila(&filaEntrada); 
-        free_fila(&filaSaida); 
+        // As filas já foram liberadas pelas funções de conversão e cálculo
+        // free_fila(&filaEntrada); 
+        // free_fila(&filaSaida); 
     }
 
     printf("Calculadora encerrada.\n");

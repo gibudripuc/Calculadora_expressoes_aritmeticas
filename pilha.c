@@ -1,8 +1,9 @@
 #include "pilha.h"
 #include <stdlib.h>
+#include <string.h> // Adicionado para strdup
 
 // Cria uma nova pilha vazia
-boolean nova_pilha(Pilha* p, unsigned int capacidade) {
+bool nova_pilha(Pilha* p, unsigned int capacidade) {
     if (capacidade == 0) return false;
 
     p->vetor = (ElementoDePilha*)malloc(capacidade * sizeof(ElementoDePilha));
@@ -13,17 +14,18 @@ boolean nova_pilha(Pilha* p, unsigned int capacidade) {
     return true;
 }
 
-// Adiciona (empilha) um elemento no topo
-boolean empilhe(Pilha* p, ElementoDePilha e) {
+// Empilha um elemento no topo
+bool empilhe(Pilha* p, ElementoDePilha e) {
     if (p->topo + 1 == p->capacidade) return false; // Pilha cheia
 
     p->topo++;
-    p->vetor[p->topo] = e;
+    p->vetor[p->topo] = strdup(e); // Duplicar a string de entrada
+    if (p->vetor[p->topo] == NULL) return false; // Erro na alocação
     return true;
 }
 
-// Remove (desempilha) um elemento do topo
-boolean desempilhe(Pilha* p, ElementoDePilha* e) {
+// Desempilha um elemento do topo
+bool desempilhe(Pilha* p, ElementoDePilha* e) {
     if (p->topo == -1) return false; // Pilha vazia
 
     *e = p->vetor[p->topo];
@@ -32,7 +34,7 @@ boolean desempilhe(Pilha* p, ElementoDePilha* e) {
 }
 
 // Apenas consulta o elemento do topo, sem remover
-boolean topo(Pilha p, ElementoDePilha* e) {
+bool topo(Pilha p, ElementoDePilha* e) {
     if (p.topo == -1) return false; // Pilha vazia
     
     *e = p.vetor[p.topo];
@@ -40,12 +42,12 @@ boolean topo(Pilha p, ElementoDePilha* e) {
 }
 
 // Verifica se a pilha está vazia
-boolean pilha_vazia(Pilha p) {
+bool pilha_vazia(Pilha p) {
     return p.topo == -1;
 }
 
 // Libera a memória da pilha e de todos os tokens (strings) nela
-boolean free_pilha(Pilha* p) {
+bool free_pilha(Pilha* p) {
     if (p->vetor == NULL) return false;
 
     // Libera cada string (token) que ainda está na pilha

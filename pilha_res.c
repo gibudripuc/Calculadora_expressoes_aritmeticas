@@ -1,7 +1,7 @@
 #include "pilha_res.h"
 #include <stdlib.h>
 
-boolean nova_pilha_res(PilhaRes* p, unsigned int capacidade) {
+bool nova_pilha_res(PilhaRes* p, unsigned int capacidade) {
     if (capacidade == 0) return false;
 
     p->vetor = (ElementoDePilhaRes*)malloc(capacidade * sizeof(ElementoDePilhaRes));
@@ -12,7 +12,7 @@ boolean nova_pilha_res(PilhaRes* p, unsigned int capacidade) {
     return true;
 }
 
-boolean empilhe_res(PilhaRes* p, ElementoDePilhaRes e) {
+bool empilhe_res(PilhaRes* p, ElementoDePilhaRes e) {
     if (p->topo + 1 == p->capacidade) return false; // Cheia
     
     p->topo++;
@@ -20,7 +20,7 @@ boolean empilhe_res(PilhaRes* p, ElementoDePilhaRes e) {
     return true;
 }
 
-boolean desempilhe_res(PilhaRes* p, ElementoDePilhaRes* e) {
+bool desempilhe_res(PilhaRes* p, ElementoDePilhaRes* e) {
     if (p->topo == -1) return false; // Vazia
     
     *e = p->vetor[p->topo];
@@ -28,17 +28,17 @@ boolean desempilhe_res(PilhaRes* p, ElementoDePilhaRes* e) {
     return true;
 }
 
-boolean pilha_res_vazia(PilhaRes p) {
+bool pilha_res_vazia(PilhaRes p) {
     return p.topo == -1;
 }
 
-// Retorna a quantidade de elementos na pilha [cite: 385]
+// Retorna a quantidade de elementos na pilha
 unsigned int pilha_res_qtd(PilhaRes p) {
     return p.topo + 1;
 }
 
 // Libera a memória da pilha (elementos são doubles, não precisam de free individual)
-boolean free_pilha_res(PilhaRes* p) {
+bool free_pilha_res(PilhaRes* p) {
     if (p->vetor == NULL) return false;
     
     free(p->vetor);

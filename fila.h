@@ -14,11 +14,11 @@ typedef struct {
     unsigned int final;
 } Fila;
 
-boolean nova_fila(Fila *f, unsigned int capacidade);
-boolean enfileire(Fila *f, ElementoDeFila e);
-boolean desenfileire(Fila *f, ElementoDeFila *e); //Quando quer usar o valor retirado
-boolean fila_vazia (Fila f);
-boolean free_fila(Fila *f);
+bool nova_fila(Fila *f, unsigned int capacidade);
+bool enfileire(Fila *f, ElementoDeFila e);
+bool desenfileire(Fila *f, ElementoDeFila *e); //Quando quer usar o valor retirado
+bool fila_vazia (Fila f);
+bool free_fila(Fila *f);
 
 #endif
 // Fila parada com vetor dinâmico

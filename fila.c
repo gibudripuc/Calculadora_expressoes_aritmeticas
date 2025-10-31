@@ -2,8 +2,8 @@
 #include <string.h>
 #include "fila.h"
 
-// Cria uma fila com capacidade especificada
-boolean nova_fila(Fila* f, unsigned int capacidade) {
+// Cria uma fila
+bool nova_fila(Fila* f, unsigned int capacidade) {
     if (capacidade == 0) return false;
 
     f->vetor = (ElementoDeFila*)malloc(capacidade * sizeof(ElementoDeFila));
@@ -18,11 +18,12 @@ boolean nova_fila(Fila* f, unsigned int capacidade) {
 }
 
 // Adiciona elemento ao final da fila
-boolean enfileire(Fila* f, ElementoDeFila e)
+bool enfileire(Fila* f, ElementoDeFila e)
 {
     if (f->qtd_atual==f->capacidade) return false;
 
-    f->vetor[f->final]=e;
+    f->vetor[f->final]=strdup(e); // Duplicar a string de entrada
+    if (f->vetor[f->final] == NULL) return false; // Erro na alocação
     f->qtd_atual++;
 
     if (f->final==f->capacidade-1)
@@ -34,7 +35,7 @@ boolean enfileire(Fila* f, ElementoDeFila e)
 }
 
 // Remove elemento do início da fila
-boolean desenfileire(Fila* f, ElementoDeFila* e)
+bool desenfileire(Fila* f, ElementoDeFila* e)
 {
     if (f->qtd_atual == 0) return false;
 
@@ -50,19 +51,17 @@ boolean desenfileire(Fila* f, ElementoDeFila* e)
     return true;
 }
 
-boolean fila_vazia (Fila f)
+bool fila_vazia (Fila f)
 {
-    // O código original estava repetido
     return f.qtd_atual == 0;
 }
 
-// Libera memória da fila (VERSÃO CORRIGIDA)
-boolean free_fila (Fila* f)
+// Libera memória da fila
+bool free_fila (Fila* f)
 {
     if (f->vetor==NULL) return false;
 
-    // Libera cada elemento (string) restante na fila
-    // A forma correta de esvaziar um ADT é usando suas próprias operações
+    // Libera cada elemento restante na fila
     while (!fila_vazia(*f))
     {
         ElementoDeFila e;

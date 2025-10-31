@@ -1,9 +1,6 @@
 #ifndef BASICS
 #define BASICS
 
-typedef enum {
-    false,
-    true
-} boolean;
+#include <stdbool.h> // TRUE/FALSE
 
 #endif // BASICS

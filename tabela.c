@@ -1,8 +1,7 @@
 #include "tabela.h" // Inclui o header
 #include "basics.h"
 
-// 'static' REMOVIDO para que a tabela seja visível externamente [cite: 45]
-boolean tabela[7][7] = {
+bool tabela[7][7] = {
     //Colunas (Fila de Entrada):
     //(    ^      * /      +      -      )
     {false, false, false, false, false, false, true},   // ( no topo da pilha
